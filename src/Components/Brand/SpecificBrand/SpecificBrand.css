@@ -1,0 +1,22 @@
+@media screen and (max-width: 576px) {
+    .cardImgTopDiv{
+
+    }
+    .cardImgTop{
+        height: 100%;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width:1201px) {
+    .cardImgTopDiv{
+        height: 181px;
+        width: auto;
+    }
+    .cardImgTop{
+        height: 100%;
+        width: 100%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+}

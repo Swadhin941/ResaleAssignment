@@ -1,0 +1,18 @@
+.backgroundColorNav{
+    background-color: #149777;
+    padding-left:20px ;
+    padding-right: 20px;
+
+}
+@media  screen and (min-width: 1201px) {
+    .backgroundColorNav{
+        background-color: #149777;
+        padding-left:20px ;
+        padding-right: 20px;
+
+    }
+    .navFlex{
+        display: flex;
+        justify-content: end;
+    }
+}

@@ -1,0 +1,16 @@
+@media screen and (max-width: 576px) {
+    
+}
+
+@media screen and (min-width: 1201px) {
+    .detailsImgTop{
+        height: 300px;
+        width: auto;
+    }
+    .detailsImg{
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+    }
+
+}

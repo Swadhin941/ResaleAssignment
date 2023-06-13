@@ -1,0 +1,55 @@
+@media  screen and (max-width: 576px) {
+    .bannerDiv{
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: row-reverse;
+        background-color: aquamarine;
+        padding-left: 15px;
+        padding-top: 10px;
+    }
+    .bannerImgText h2{
+        color: darkslategray;
+        font-family: 'Oswald', sans-serif;
+        font-weight: bolder;
+    }
+    
+}
+@media (min-width: 577px) and (max-width: 767px)  {
+    .bannerDiv{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .bannerDiv{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        
+    }
+    .bannerImgText h2{
+        color: black;
+        font-family: 'Oswald', sans-serif;
+        font-weight: bolder;
+    }
+
+}
+
+
+@media screen and (min-width: 1201px) {
+    .bannerImgText{
+        position: absolute;
+        top: 250px;
+        left: 550px;
+    }
+    .bannerImgText h2{
+        color: white;
+        font-family: 'Oswald', sans-serif;
+        font-weight: bolder;
+    }
+    .bannerImgDiv{
+        background-color: black;
+    }
+    
+}
