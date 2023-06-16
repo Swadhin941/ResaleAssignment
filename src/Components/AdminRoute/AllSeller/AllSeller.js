@@ -8,7 +8,7 @@ const AllSeller = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/userList?user=${user?.email}`, {
+            fetch(`http://localhost:5000/sellerList?user=${user?.email}`, {
                 method: "GET",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`

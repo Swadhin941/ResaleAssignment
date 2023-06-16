@@ -1,12 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SharedData } from '../../SharedData/SharedContext';
+import { useNavigate } from 'react-router-dom';
 
 const AllBuyer = () => {
     const [allBuyer, setAllBuyer]= useState([]);
     const {user, logout}= useContext(SharedData);
+    const navigate= useNavigate();
     useEffect(()=>{
         if(user?.email){
-            fetch(`http://localhost:5000/`)
+            fetch(`http://localhost:5000/buyerList?user=${user?.email}`,{
+                method: "GET",
+                headers:{
+                    authorization: `bearer ${localStorage.getItem('token')}`
+                }
+            })
+            .then(res=>{
+                if(res.status === 401){
+                    logout()
+                }
+                if(res.status=== 403){
+                    navigate('/forbidden');
+                }
+                return res.json();
+            })
+            .then(data=>{
+                console.log(data);
+                setAllBuyer(data);
+            })
         }
     },[user])
     return (
@@ -23,7 +43,14 @@ const AllBuyer = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            {
+                                allBuyer.map((item, index)=><tr key={item._id}>
+                                    <td>{index+1}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.email}</td>
+                                    <td><button className='btn btn-danger btn-sm'>Delete</button></td>
+                                </tr>)
+                            }
                         </tbody>
                     </table>
                 </div>
