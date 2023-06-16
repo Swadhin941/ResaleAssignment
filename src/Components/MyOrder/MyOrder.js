@@ -29,7 +29,7 @@ const MyOrder = () => {
                     setMyOrder(data);
                 })
         }
-    },[user?.email])
+    }, [user?.email])
     return (
         <div className='container-fluid'>
             <div className="row">
@@ -51,7 +51,7 @@ const MyOrder = () => {
                                     <td><div style={{ height: "30px", width: "30px" }}> <PhotoProvider><PhotoView src={item.itemImg}><img src={item.itemImg} className='img-fluid' alt="" style={{ height: "100%", width: "100%", borderRadius: "50%" }} /></PhotoView> </PhotoProvider> </div></td>
                                     <td><Link to={`/details/${item.itemId}`}>{item.itemName}</Link></td>
                                     <td>${item.itemPrice}</td>
-                                    <td>{!item.paymentStatus ? <button className='btn btn-sm btn-success' onClick={()=>navigate(`/payment/${item._id}`)}>Pay</button>: <button className='btn btn-sm btn-warning' disabled>Sold</button>}</td>
+                                    {/* <td>{!item.paymentStatus ? <button className='btn btn-sm btn-success' onClick={()=>navigate(`/payment/${item._id}`)}>Pay</button>: <button className='btn btn-sm btn-warning' disabled>Sold</button>}</td> */}
                                 </tr>)
                             }
                         </tbody>
