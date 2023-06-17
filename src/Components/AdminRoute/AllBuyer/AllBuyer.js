@@ -1,34 +1,67 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SharedData } from '../../SharedData/SharedContext';
 import { useNavigate } from 'react-router-dom';
+import DeleteModal from '../../DeleteModal/DeleteModal';
+import { toast } from 'react-hot-toast';
 
 const AllBuyer = () => {
-    const [allBuyer, setAllBuyer]= useState([]);
-    const {user, logout}= useContext(SharedData);
-    const navigate= useNavigate();
-    useEffect(()=>{
-        if(user?.email){
-            fetch(`http://localhost:5000/buyerList?user=${user?.email}`,{
+    const [allBuyer, setAllBuyer] = useState([]);
+    const { user, logout } = useContext(SharedData);
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
+    const [deleteId, setDeleteId] = useState('');
+    const [reload, setReload] = useState(true);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (user?.email) {
+            fetch(`http://localhost:5000/buyerList?user=${user?.email}`, {
                 method: "GET",
-                headers:{
+                headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`
                 }
             })
-            .then(res=>{
-                if(res.status === 401){
-                    logout()
-                }
-                if(res.status=== 403){
-                    navigate('/forbidden');
-                }
-                return res.json();
-            })
-            .then(data=>{
-                console.log(data);
-                setAllBuyer(data);
-            })
+                .then(res => {
+                    if (res.status === 401) {
+                        logout()
+                    }
+                    if (res.status === 403) {
+                        navigate('/forbidden');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    setAllBuyer(data);
+                })
         }
-    },[user])
+    }, [user, reload])
+
+    useEffect(() => {
+        if (deleteConfirm) {
+            fetch(`http://localhost:5000/deleteUser?user=${user?.email}`, {
+                method: "DELETE",
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('token')}`,
+                    'content-type': "application/json"
+                },
+                body: JSON.stringify({ email: deleteId })
+            })
+                .then(res => {
+                    if (res.status === 401) {
+                        logout()
+                    }
+                    if (res.status === 403) {
+                        navigate('/forbidden');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.deletedCount >= 1) {
+                        toast.success("Deleted successfully");
+                        setDeleteConfirm(false);
+                        setReload(!reload);
+                    }
+                })
+        }
+    }, [deleteConfirm])
     return (
         <div className='container-fluid'>
             <div className="row">
@@ -44,15 +77,16 @@ const AllBuyer = () => {
                         </thead>
                         <tbody>
                             {
-                                allBuyer.map((item, index)=><tr key={item._id}>
-                                    <td>{index+1}</td>
+                                allBuyer.map((item, index) => <tr key={item._id}>
+                                    <td>{index + 1}</td>
                                     <td>{item.name}</td>
                                     <td>{item.email}</td>
-                                    <td><button className='btn btn-danger btn-sm'>Delete</button></td>
+                                    <td><button className='btn btn-danger btn-sm' data-bs-toggle="modal" data-bs-target="#deleteModal" onClick={() => setDeleteId(item.email)}>Delete</button></td>
                                 </tr>)
                             }
                         </tbody>
                     </table>
+                    <DeleteModal deleteConfirm={setDeleteConfirm}></DeleteModal>
                 </div>
             </div>
         </div>

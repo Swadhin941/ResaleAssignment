@@ -13,7 +13,7 @@ const SellerRoute = ({children}) => {
     if(user && user?.uid && seller){
         return children;
     }
-    return <Navigate to={'/login'} state={{from: location}}></Navigate>
+    return <Navigate to={'/login'} state={{from: location}} replace></Navigate>
 };
 
 export default SellerRoute;

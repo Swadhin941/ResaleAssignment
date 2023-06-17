@@ -21,6 +21,8 @@ import PageNotFound from "./Components/PageError/PageNotFound/PageNotFound";
 import ErrorPage from "./Components/ErrorPage/ErrorPage";
 import SellerRoute from "./Components/PrivateRoute/SellerRoute/SellerRoute";
 import AllAdmin from "./Components/AdminRoute/AllAdmin/AllAdmin";
+import AdminRoute from "./Components/PrivateRoute/AdminRoute/AdminRoute";
+import Payment from "./Components/Payment/Payment";
 // import Payment from "./Components/Payment/Payment/Payment";
 
 function App() {
@@ -94,25 +96,25 @@ function App() {
           path: "/my-products",
           element: <PrivateRoute><MyProducts></MyProducts></PrivateRoute>
         },
-        // {
-        //   path:"/payment/:id",
-        //   loader:({params})=>{
-        //     return fetch(`http://localhost:5000/bookingDetails/${params.id}`,{
-        //       method:"GET",
-        //       headers:{
-        //         authorization: `bearer ${localStorage.getItem('token')}`
-        //       }
-        //     })
-        //     .then(res=>{
-        //       if(res.status===401){
-        //         logout()
-        //         setLoading(false);
-        //       }
-        //       return res.json();
-        //     })
-        //   },
-        //   element:<PrivateRoute><Payment></Payment></PrivateRoute>
-        // }
+        {
+          path:"/payment/:id",
+          loader:({params})=>{
+            return fetch(`http://localhost:5000/bookingDetails/${params.id}`,{
+              method:"GET",
+              headers:{
+                authorization: `bearer ${localStorage.getItem('token')}`
+              }
+            })
+            .then(res=>{
+              if(res.status===401){
+                logout()
+                setLoading(false);
+              }
+              return res.json();
+            })
+          },
+          element:<PrivateRoute><Payment></Payment></PrivateRoute>
+        }
       ]
     },
     {
@@ -121,19 +123,19 @@ function App() {
     },
     {
       path: "/dashboard",
-      element: <PrivateRoute><AdminLayout></AdminLayout></PrivateRoute>, 
+      element: <AdminRoute><AdminLayout></AdminLayout></AdminRoute>, 
       children:[
         {
           path: "/dashboard",
-          element: <PrivateRoute><AllBuyer></AllBuyer></PrivateRoute>
+          element: <AdminRoute><AllBuyer></AllBuyer></AdminRoute>
         },
         {
           path:"/dashboard/allSeller",
-          element: <PrivateRoute><AllSeller></AllSeller></PrivateRoute>
+          element: <AdminRoute><AllSeller></AllSeller></AdminRoute>
         },
         {
           path: "/dashboard/allAdmin",
-          element: <PrivateRoute><AllAdmin></AllAdmin></PrivateRoute>
+          element: <AdminRoute><AllAdmin></AllAdmin></AdminRoute>
         }
       ]
     },
