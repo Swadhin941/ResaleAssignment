@@ -17,7 +17,7 @@ const MyProducts = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/my-products?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/my-products?user=${user?.email}`, {
                 method: "GET",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`
@@ -40,7 +40,7 @@ const MyProducts = () => {
 
     const handleAdvertise = (item) => {
         item.advertise = true;
-        fetch(`http://localhost:5000/advertise?user=${user?.email}`, {
+        fetch(`https://carresaleserver.vercel.app/advertise?user=${user?.email}`, {
             method: "PUT",
             headers: {
                 authorization: `bearer ${localStorage.getItem('token')}`,
@@ -65,7 +65,7 @@ const MyProducts = () => {
     }
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/getUser?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/getUser?user=${user?.email}`, {
                 method: "GET",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`
@@ -84,7 +84,7 @@ const MyProducts = () => {
                     // console.log(data);
                     setUserPhoto(data);
                 })
-            fetch(`http://localhost:5000/verifyStatus?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/verifyStatus?user=${user?.email}`, {
                 method: "get",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`
@@ -115,7 +115,7 @@ const MyProducts = () => {
         const profileImage = document.querySelector('.profileImageInput').files[0];
         const formData = new FormData();
         formData.append("image", profileImage);
-        console.log(formData);
+        // console.log(formData);
         fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_API}`, {
             method: "POST",
             body: formData
@@ -124,7 +124,7 @@ const MyProducts = () => {
             .then(imgData => {
                 console.log(imgData.data.url);
                 setUploadedImageLink(imgData.data.url)
-                fetch(`http://localhost:5000/user?user=${user?.email}`, {
+                fetch(`https://carresaleserver.vercel.app/user?user=${user?.email}`, {
                     method: "PUT",
                     headers: {
                         authorization: `bearer ${localStorage.getItem('token')}`,
@@ -154,7 +154,7 @@ const MyProducts = () => {
 
     };
     const handleVerifyAccount = () => {
-        fetch(`http://localhost:5000/verifyRequest?user=${user?.email}`, {
+        fetch(`https://carresaleserver.vercel.app/verifyRequest?user=${user?.email}`, {
             method: "POST",
             headers: {
                 authorization: `bearer ${localStorage.getItem('token')}`,
@@ -180,7 +180,7 @@ const MyProducts = () => {
     //Cancel verify request working from here
     useEffect(()=>{
         if(deleteConfirm){
-            fetch(`http://localhost:5000/verifyStatus?user=${user?.email}`,{
+            fetch(`https://carresaleserver.vercel.app/verifyStatus?user=${user?.email}`,{
                 method: "DELETE",
                 headers:{
                     authorization: `bearer ${localStorage.getItem('token')}`,
@@ -199,7 +199,7 @@ const MyProducts = () => {
             })
             .then(data=>{
                 if(data.deletedCount>=1){
-                    console.log("verify request cancel", data);
+                    // console.log("verify request cancel", data);
                     setReload(!reload);
                     setDeleteConfirm(false);
                 }

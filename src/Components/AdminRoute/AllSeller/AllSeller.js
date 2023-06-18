@@ -7,13 +7,13 @@ import { toast } from 'react-hot-toast';
 const AllSeller = () => {
     const [allSeller, setAllSeller] = useState([]);
     const { user, logout } = useContext(SharedData);
-    const [reload, setReload]= useState(true);
-    const [deleteConfirm, setDeleteConfirm]= useState(false);
-    const[deleteId, setDeleteId]= useState('');
+    const [reload, setReload] = useState(true);
+    const [deleteConfirm, setDeleteConfirm] = useState(false);
+    const [deleteId, setDeleteId] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/sellerList?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/sellerList?user=${user?.email}`, {
                 method: "GET",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`
@@ -35,34 +35,61 @@ const AllSeller = () => {
         }
 
     }, [user, reload])
-    useEffect(()=>{
-        if(deleteConfirm){
-            fetch(`http://localhost:5000/deleteUser?user=${user?.email}`,{
+    useEffect(() => {
+        if (deleteConfirm) {
+            fetch(`https://carresaleserver.vercel.app/deleteUser?user=${user?.email}`, {
                 method: "DELETE",
-                headers:{
+                headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`,
                     'content-type': "application/json"
                 },
-                body: JSON.stringify({email: deleteId})
+                body: JSON.stringify({ email: deleteId })
             })
-            .then(res=>{
-                if(res.status === 401){
-                    logout()
-                }
-                if(res.status=== 403){
-                    navigate('/forbidden');
-                }
-                return res.json();
-            })
-            .then(data=>{
-                if(data.deletedCount >=1){
-                    toast.success("Deleted successfully");
-                    setDeleteConfirm(false);
-                    setReload(!reload);
-                }
-            })
+                .then(res => {
+                    if (res.status === 401) {
+                        logout()
+                    }
+                    if (res.status === 403) {
+                        navigate('/forbidden');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.deletedCount >= 1) {
+                        toast.success("Deleted successfully");
+                        setDeleteConfirm(false);
+                        setReload(!reload);
+                    }
+                })
         }
-    },[deleteConfirm])
+    }, [deleteConfirm])
+
+    const handleVerify = (email) => {
+        console.log(email);
+        fetch(`https://carresaleserver.vercel.app/verifySeller?user=${user?.email}`,{
+            method: "PUT",
+            headers:{
+                authorization: `bearer ${localStorage.getItem('token')}`,
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({email: email})
+        })
+        .then(res=>{
+            if(res.status===401){
+                logout()
+            }
+            if(res.status===403){
+                navigate('/forbidden');
+            }
+            return res.json();
+        })
+        .then(data=>{
+            if(data.modifiedCount>=1){
+                toast.success("Verify Status updated");
+                setReload(!reload);
+            }
+        })
+    }
 
 
     return (
@@ -87,11 +114,11 @@ const AllSeller = () => {
                                     <td>{item.email}</td>
                                     <td>
                                         {
-                                            !item?.verified && item?.verifyRequest ? <button className='btn btn-success btn-sm'>Accept verify request</button> : <button className='btn btn-success btn-sm'>Verify Account</button>
+                                            !item?.verified ? item?.verifyRequest ? <button className='btn btn-success btn-sm' onClick={() => handleVerify(item.email)}>Accept verify request</button> : <button className='btn btn-success btn-sm' onClick={() => handleVerify(item.email)}>Verify Account</button>: <button className='btn btn-success fw-bold btn-sm' disabled>Verified</button>
                                         }
                                     </td>
                                     <td>
-                                        <button className='btn btn-danger btn-sm' data-bs-toggle="modal" data-bs-target="#deleteModal" onClick={()=>setDeleteId(item.email)}>Delete</button>
+                                        <button className='btn btn-danger btn-sm' data-bs-toggle="modal" data-bs-target="#deleteModal" onClick={() => setDeleteId(item.email)}>Delete</button>
                                     </td>
                                 </tr>)
                             }

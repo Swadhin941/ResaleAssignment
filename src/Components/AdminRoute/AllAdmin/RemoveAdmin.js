@@ -17,7 +17,7 @@ const RemoveAdmin = ({email, reload, setReload}) => {
         }
         setAccountTypeError('');
         console.log(selectedType);
-        fetch(`http://localhost:5000/removeAdmin?user=${user?.email}`,{
+        fetch(`https://carresaleserver.vercel.app/removeAdmin?user=${user?.email}`,{
             method: 'PATCH',
             headers:{
                 authorization: `bearer ${localStorage.getItem('token')}`,

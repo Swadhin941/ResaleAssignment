@@ -8,7 +8,7 @@ const AllCategories = () => {
     const { user } = useContext(SharedData);
     const navigate = useNavigate();
     useEffect(() => {
-        fetch('http://localhost:5000/allCategory')
+        fetch('https://carresaleserver.vercel.app/allCategory')
             .then(res => res.json())
             .then(data => {
                 setAllBrand(data);

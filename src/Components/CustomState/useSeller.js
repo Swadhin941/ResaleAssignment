@@ -5,7 +5,7 @@ const useSeller = (email) => {
     const [sellerLoading, setSellerLoading]= useState(true);
     useEffect(() => {
         if (email) {           
-            fetch(`http://localhost:5000/sellerCheck?user=${email}`)
+            fetch(`https://carresaleserver.vercel.app/sellerCheck?user=${email}`)
                 .then(res => res.json())
                 .then(data => {
                     setSeller(data.isSeller);

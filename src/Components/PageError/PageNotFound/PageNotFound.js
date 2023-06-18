@@ -1,9 +1,24 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import "./PageNotFound.css";
+
 
 const PageNotFound = () => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(-1, { replace: true });
+    }
     return (
-        <div>
-            <h1>Page not found</h1>
+        <div className='container-fluid bg-dark'>
+            <div className='d-flex justify-content-center align-items-center' style={{ height: "100vh" }}>
+                <div >
+                    <h1 className='text-center text-white forbiddenCode'>4<span style={{ color: "greenyellow" }}>0</span>4</h1>
+                    <h5 className='text-center text-white'>Page not found!</h5>
+                    <div className='d-flex justify-content-center'>
+                        <button className='btn' style={{ backgroundColor: "white", fontWeight: "600" }} onClick={handleClick}>Back to previous page</button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

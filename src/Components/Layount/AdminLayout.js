@@ -9,7 +9,7 @@ const AdminLayout = () => {
     const navigate= useNavigate();
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/getUser?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/getUser?user=${user?.email}`, {
                 method: "GET",
                 headers:{
                     authorization: `bearer ${localStorage.getItem('token')}`

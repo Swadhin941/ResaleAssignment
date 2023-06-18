@@ -15,7 +15,7 @@ const CheckOut = ({dataLoad}) => {
         itemPrice: dataLoad.itemPrice
     }
     useEffect(()=>{
-        fetch(`http://localhost:5000/create-payment-intents?user=${user?.email}`,{
+        fetch(`https://carresaleserver.vercel.app/create-payment-intents?user=${user?.email}`,{
             method: "POST",
             headers:{
                 authorization : `bearer ${localStorage.getItem("token")}`,
@@ -73,7 +73,7 @@ const CheckOut = ({dataLoad}) => {
         }
         console.log(paymentIntent);
         if(paymentIntent.status==='succeeded'){
-            fetch(`http://localhost:5000/payment?user=${user?.email}`,{
+            fetch(`https://carresaleserver.vercel.app/payment?user=${user?.email}`,{
                 method:"POST",
                 headers:{
                     authorization: `bearer ${localStorage.getItem('token')}`,

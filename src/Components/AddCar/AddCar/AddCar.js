@@ -21,7 +21,7 @@ const AddCar = () => {
     const carLocation = ['Sylhet', "Dhaka", "Dinajpur", 'Rajshahi', 'Pabna', "Barisal", "Khulna", "Faridpur", "Noakhali", "Mymensingh"];
     const carStatus = ["Excellent", "Good", "Fair"];
     useEffect(() => {
-        fetch('http://localhost:5000/brandName', {
+        fetch('https://carresaleserver.vercel.app/brandName', {
             method: 'get',
             headers: {
                 authorization: `bearer ${localStorage.getItem('token')}`,
@@ -79,8 +79,8 @@ const AddCar = () => {
             return;
         }
         setImgError('');
-        console.log(form);
-        console.log(form.uploadPicture.files);
+        // console.log(form);
+        // console.log(form.uploadPicture.files);
         const uploadPicture = form.uploadPicture.files[0];
         const formData = new FormData();
         formData.append('image', uploadPicture);
@@ -104,7 +104,7 @@ const AddCar = () => {
                     const contact = parseInt(e.target.contact.value);
                     const time = Date.now();
                     const date = format(new Date(), "PP");
-                    fetch(`http://localhost:5000/brandUpload?user=${user?.email}`, {
+                    fetch(`https://carresaleserver.vercel.app/brandUpload?user=${user?.email}`, {
                         method: "POST",
                         headers: {
                             authorization: `bearer ${localStorage.getItem('token')}`,

@@ -13,7 +13,7 @@ const AllBuyer = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:5000/buyerList?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/buyerList?user=${user?.email}`, {
                 method: "GET",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`
@@ -36,7 +36,7 @@ const AllBuyer = () => {
 
     useEffect(() => {
         if (deleteConfirm) {
-            fetch(`http://localhost:5000/deleteUser?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/deleteUser?user=${user?.email}`, {
                 method: "DELETE",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`,

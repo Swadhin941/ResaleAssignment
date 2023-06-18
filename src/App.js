@@ -23,6 +23,7 @@ import SellerRoute from "./Components/PrivateRoute/SellerRoute/SellerRoute";
 import AllAdmin from "./Components/AdminRoute/AllAdmin/AllAdmin";
 import AdminRoute from "./Components/PrivateRoute/AdminRoute/AdminRoute";
 import Payment from "./Components/Payment/Payment";
+import Blog from "./Components/Blog/Blog";
 // import Payment from "./Components/Payment/Payment/Payment";
 
 function App() {
@@ -52,7 +53,7 @@ function App() {
         {
           path: "/allCategories/:brandName",
           loader: ({ params }) => {
-            return fetch(`http://localhost:5000/allCategories/${params.brandName}`, {
+            return fetch(`https://carresaleserver.vercel.app/allCategories/${params.brandName}`, {
               headers: {
                 authorization: `bearer ${localStorage.getItem('token')}`
               }
@@ -70,7 +71,7 @@ function App() {
         {
           path: 'details/:id',
           loader: ({ params }) => {
-            return fetch(`http://localhost:5000/details/${params.id}`, {
+            return fetch(`https://carresaleserver.vercel.app/details/${params.id}`, {
               headers: {
                 authorization: `bearer ${localStorage.getItem('token')}`
               }
@@ -99,7 +100,7 @@ function App() {
         {
           path:"/payment/:id",
           loader:({params})=>{
-            return fetch(`http://localhost:5000/bookingDetails/${params.id}`,{
+            return fetch(`https://carresaleserver.vercel.app/bookingDetails/${params.id}`,{
               method:"GET",
               headers:{
                 authorization: `bearer ${localStorage.getItem('token')}`
@@ -114,6 +115,10 @@ function App() {
             })
           },
           element:<PrivateRoute><Payment></Payment></PrivateRoute>
+        },
+        {
+          path: "/blog",
+          element: <Blog></Blog>
         }
       ]
     },

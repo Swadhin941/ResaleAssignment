@@ -20,7 +20,7 @@ const DetailsPage = () => {
     useEffect(() => {
         if (modalData) {
             setBookingButton(true);
-            fetch(`http://localhost:5000/booking`, {
+            fetch(`https://carresaleserver.vercel.app/booking`, {
                 method: "POST",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`,
@@ -58,7 +58,7 @@ const DetailsPage = () => {
     }, [modalData])
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/bookingCheck?user=${user?.email}&&item=${detailsData._id}`, {
+            fetch(`https://carresaleserver.vercel.app/bookingCheck?user=${user?.email}&&item=${detailsData._id}`, {
                 method: "GET",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`
@@ -88,7 +88,7 @@ const DetailsPage = () => {
     }, [reload])
     useEffect(() => {
         if (deleteConfirm && user?.email !== detailsData.seller) {
-            fetch(`http://localhost:5000/deleteBooking?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/deleteBooking?user=${user?.email}`, {
                 method: 'DELETE',
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`,
@@ -112,7 +112,7 @@ const DetailsPage = () => {
                 })
         }
         if (deleteConfirm && user?.email === detailsData.seller) {
-            fetch(`http://localhost:5000/deleteProduct?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/deleteProduct?user=${user?.email}`, {
                 method: "DELETE",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`,

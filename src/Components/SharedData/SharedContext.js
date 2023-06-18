@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import app from '../Firebase/Firebase';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 
 export const SharedData = createContext();
 
@@ -9,6 +9,7 @@ const SharedContext = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [errorRegister, setErrorRegister] = useState(false);
+    const googleProvider = new GoogleAuthProvider();
 
     const createUser = (email, password) => {
         setLoading(true);
@@ -26,11 +27,16 @@ const SharedContext = ({ children }) => {
             displayName: userName,
         })
     }
-    const updateUserPhoto= (photoURL)=>{
+    const updateUserPhoto = (photoURL) => {
         setLoading(true);
-        return updateProfile(auth.currentUser,{
+        return updateProfile(auth.currentUser, {
             photoURL: photoURL,
         })
+    }
+
+    const googleLogin= ()=>{
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
     }
 
     const logout = () => {
@@ -41,17 +47,16 @@ const SharedContext = ({ children }) => {
 
     useEffect(() => {
         const check = onAuthStateChanged(auth, currentUser => {
-            if (!errorRegister) {
-                setUser(currentUser);
-                setLoading(false);
-                console.log(currentUser);
-            }
+            setUser(currentUser);
+            setLoading(false);
+            console.log(currentUser);
+
 
         })
         return () => check();
     })
 
-    const authInfo = { user, loading, createUser, login, logout, updateUserName, setUser, setErrorRegister, setLoading, updateUserPhoto };
+    const authInfo = { user, loading, createUser, login, logout, updateUserName, setUser, setErrorRegister, setLoading, updateUserPhoto, googleLogin };
     return (
         <div>
             <SharedData.Provider value={authInfo}>

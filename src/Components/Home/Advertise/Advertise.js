@@ -15,7 +15,7 @@ const Advertise = () => {
     }
     useEffect(() => {
         setDataLoader(true);
-        fetch(`http://localhost:5000/advertise`)
+        fetch(`https://carresaleserver.vercel.app/advertise`)
             .then(res => res.json())
             .then(data => {
                 setAdvertiseData(data);

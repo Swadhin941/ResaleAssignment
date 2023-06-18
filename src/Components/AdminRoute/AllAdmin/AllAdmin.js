@@ -15,7 +15,7 @@ const AllAdmin = () => {
     const [reload, setReload]= useState(true);
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/userList?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/userList?user=${user?.email}`, {
                 method: "GET",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`
@@ -37,7 +37,7 @@ const AllAdmin = () => {
         }
     }, [user, reload])
     const handleAdmin= (email)=>{
-        fetch(`http://localhost:5000/makeAdmin?user=${user?.email}`,{
+        fetch(`https://carresaleserver.vercel.app/makeAdmin?user=${user?.email}`,{
             method: "PATCH",
             headers:{
                 authorization: `bearer ${localStorage.getItem('token')}`,
@@ -63,7 +63,7 @@ const AllAdmin = () => {
     }
     useEffect(()=>{
         if(deleteConfirm){
-            fetch(`http://localhost:5000/deleteUser?user=${user?.email}`,{
+            fetch(`https://carresaleserver.vercel.app/deleteUser?user=${user?.email}`,{
                 method: "DELETE",
                 headers:{
                     authorization: `bearer ${localStorage.getItem('token')}`,

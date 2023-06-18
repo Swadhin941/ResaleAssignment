@@ -11,7 +11,7 @@ const MyOrder = () => {
     const [isAdmin, adminLoading]= useAdmin(user?.email);
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/my-order?user=${user?.email}`, {
+            fetch(`https://carresaleserver.vercel.app/my-order?user=${user?.email}`, {
                 method: "GET",
                 headers: {
                     authorization: `bearer ${localStorage.getItem('token')}`

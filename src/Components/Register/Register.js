@@ -28,7 +28,7 @@ const Register = () => {
             .then(users => {
                 updateUserName(data.fullName)
                     .then(() => {
-                        fetch('http://localhost:5000/user', {
+                        fetch('https://carresaleserver.vercel.app/user', {
                             method: "POST",
                             headers: {
                                 "content-type": "application/json",

@@ -8,7 +8,7 @@ import useToken from '../CustomState/useToken';
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit } = useForm();
-    const { login, user } = useContext(SharedData);
+    const { login, user, googleLogin } = useContext(SharedData);
     const [token] = useToken(user?.email);
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';

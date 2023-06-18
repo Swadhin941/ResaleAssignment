@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 import { SharedData } from '../SharedData/SharedContext';
@@ -6,11 +6,17 @@ import useSeller from '../CustomState/useSeller';
 import useAdmin from '../CustomState/useAdmin';
 
 const Navbar = () => {
-    const { user, logout } = useContext(SharedData);
+    const { user, logout, setUser } = useContext(SharedData);
+    // const [instantLoadSeller, setInstantLoadSeller]= useState(user?.email);
     const [seller, sellerLoading] = useSeller(user?.email);
     const [isAdmin, adminLoading] = useAdmin(user?.email);
+
     const handleLogout = () => {
         logout()
+            .then(() => {
+                setUser(null);
+            })
+        // setInstantLoadSeller('');
     }
     return (
         <nav className="navbar navbar-expand-lg backgroundColorNav">
@@ -24,8 +30,11 @@ const Navbar = () => {
                         <li className="nav-item">
                             <NavLink to={'/'} className={'nav-link text-white fw-bold'}>Home</NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link text-white fw-bold" to={'/blog'}>Blog</NavLink>
+                        </li>
                         {
-                            seller && <li className="nav-item">
+                            user?.uid && seller && <li className="nav-item">
                                 <NavLink to={'/addCar'} className={'nav-link text-white fw-bold'}>Add Car</NavLink>
                             </li>
                         }
